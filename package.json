@@ -1,7 +1,7 @@
 {
   "name": "gitstore",
-  "version": "0.0.1",
-  "description": "A central git repository with notification and upstream synchronization abilities",
+  "version": "0.0.2",
+  "description": "A simple node.js server which holds bare repos and keeps a local copy of GitHub repos",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
