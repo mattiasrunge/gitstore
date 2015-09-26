@@ -23,34 +23,37 @@ app.get("/", (req, res) => {
 });
 
 app.post("/github", (req, res) => {
-    if (req.headers["x-github-event"] !== "push") {
+    if (req.headers["x-github-event"] === "push") {
+        fs.exists(config.repoDir + "/" + req.body.repository.name, exists => {
+            if (!exists) {
+                console.error("Got GitHub push for repository we do not recognize, " + req.body.repository.name);
+                res.status(404).end();
+                return;
+            }
+
+            console.log("Repository " + req.body.repository.name + " updated at GitHub!");
+            let cmd = scriptDir + "update.sh " + config.repoDir + "/" + req.body.repository.name + " " + req.body.repository.ssh_url;
+
+            console.log("Executing " + cmd);
+            exec(cmd, (error, stdout, stderr) => {
+                if (error) {
+                    console.error("Failed to execute command, error: " + error);
+                    return res.status(500).end();
+                }
+
+                console.log(stdout);
+                console.log(stderr);
+                res.end();
+            });
+        });
+    } else if (req.headers["x-github-event"] === "ping") {
+        console.error("Got GitHub ping request");
+        res.end();
+    } else {
         console.error("Got unknown GitHub request");
         res.status(400).end();
         return;
     }
-
-    fs.exists(config.repoDir + "/" + req.body.repository.name, exists => {
-        if (!exists) {
-            console.error("Got GitHub push for repository we do not recognize, " + req.body.repository.name);
-            res.status(404).end();
-            return;
-        }
-
-        console.log("Repository " + req.body.repository.name + " updated at GitHub!");
-        let cmd = scriptDir + "update.sh " + config.repoDir + "/" + req.body.repository.name + " " + req.body.repository.ssh_url;
-
-        console.log("Executing " + cmd);
-        exec(cmd, (error, stdout, stderr) => {
-            if (error) {
-                console.error("Failed to execute command, error: " + error);
-                return res.status(500).end();
-            }
-
-            console.log(stdout);
-            console.log(stderr);
-            res.end();
-        });
-    });
 });
 
 app.get("/update/:name", (req, res) => {
