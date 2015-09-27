@@ -39,7 +39,7 @@ app.use(route.get("/", function*(next) {
     this.body = items.map(item => "ssh://" + config.hostname + config.repoDir + "/" + item).join("\n");
 }));
 
-app.use(route.get("/github", function*(next) {
+app.use(route.post("/github", function*(next) {
     if (req.headers["x-github-event"] !== "push" & req.headers["x-github-event"] !== "ping") {
         throw new KoaError("Got unknown GitHub request: " + req.headers["x-github-event"], 400);
     }
