@@ -27,7 +27,8 @@ app.use(function*(next) {
     try {
         yield next;
     } catch (error) {
-        console.error(error.toString());
+        console.error(error);
+        console.error(error.stack);
         this.response.status = error.status || 500;
         this.type = "text/plain";
         this.body = error.message || error;
@@ -50,7 +51,7 @@ app.use(route.post("/github", function*() {
     let exists = yield fs.exists(config.repoDir + "/" + this.request.body.repository.name);
 
     if (!exists) {
-        throw KoaError("Got GitHub push for repository we do not recognize, " + this.request.body.repository.name, 404);
+        throw new KoaError("Got GitHub push for repository we do not recognize, " + this.request.body.repository.name, 404);
     }
 
     let cmd = scriptDir + "update.sh " + config.repoDir + "/" + this.request.body.repository.name + " " + this.request.body.repository.ssh_url;
@@ -75,7 +76,7 @@ app.use(route.get("/create/:name", function*(name) {
     let exists = yield fs.exists(config.repoDir + "/" + name);
 
     if (exists) {
-        throw KoaError("Repository already exists, " + name, 409);
+        throw new KoaError("Repository already exists, " + name, 409);
     }
 
     let cmd = scriptDir + "create.sh " + scriptDir + " " + config.repoDir + " " + name + " http://" + config.hostname;
