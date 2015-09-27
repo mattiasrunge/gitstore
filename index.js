@@ -26,7 +26,7 @@ app.use(function*(next) {
     try {
         yield next;
     } catch (error) {
-        console.error(error);
+        console.error(error.toString());
         this.response.status = error.status || 500;
         this.type = "text/plain";
         this.body = error.message || error;
@@ -44,13 +44,14 @@ app.use(route.get("/github", function*(next) {
         throw new KoaError("Got unknown GitHub request: " + req.headers["x-github-event"], 400);
     }
 
+    console.log("Repository " + req.body.repository.name + " updated at GitHub!");
+
     let exists = yield fs.exists(config.repoDir + "/" + req.body.repository.name);
 
     if (!exists) {
         throw KoaError("Got GitHub push for repository we do not recognize, " + req.body.repository.name, 404);
     }
 
-    console.log("Repository " + req.body.repository.name + " updated at GitHub!");
     let cmd = scriptDir + "update.sh " + config.repoDir + "/" + req.body.repository.name + " " + req.body.repository.ssh_url;
 
     console.log("Executing " + cmd);
