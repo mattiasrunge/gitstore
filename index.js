@@ -72,7 +72,7 @@ app.use(route.get("/update/:name", function*(name) {
 }));
 
 app.use(route.get("/create/:name", function*(name) {
-    let exists = yield fs.exists(config.repoDir + "/" + .name);
+    let exists = yield fs.exists(config.repoDir + "/" + name);
 
     if (exists) {
         throw KoaError("Repository already exists, " + name, 409);
