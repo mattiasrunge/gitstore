@@ -4,7 +4,7 @@
   "description": "A simple node.js server which holds bare repos and keeps a local copy of GitHub repos",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "cd client && npm install"
   },
   "keywords": [
     "git"
@@ -12,10 +12,12 @@
   "author": "Mattias Runge <mattias@runge.se>",
   "license": "GPL-2.0",
   "dependencies": {
+    "bluebird": "^2.10.1",
     "child-process-promise": "^1.1.0",
     "fs-promise": "^0.3.1",
     "koa": "^1.0.0",
     "koa-bodyparser": "^2.0.1",
-    "koa-route": "^2.4.2"
+    "koa-route": "^2.4.2",
+    "koa-static": "^1.4.9"
   }
 }
