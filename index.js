@@ -35,8 +35,14 @@ app.use(route.get("/", function*() {
 
 app.use(route.get("/list", function*() {
     let items = yield git.list(config.hostname, config.repoDir);
-    this.type = "text/plain";
-    this.body = items.join("\n");
+
+    if (this.request.headers.accept.indexOf("application/json") !== -1) {
+        this.type = "application/json";
+        this.body = JSON.stringify(items, null, 2);
+    } else {
+        this.type = "text/plain";
+        this.body = items.join("\n");
+    }
 }));
 
 app.use(route.post("/github", function*() {

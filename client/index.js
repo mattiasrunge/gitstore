@@ -11,7 +11,9 @@ require.config({
 });
 
 var components = [
-    "root-view"
+    "root",
+    "list",
+    "create"
 ];
 
 require([

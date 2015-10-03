@@ -1,0 +1,21 @@
+<div class="mdl-grid" style="max-width: 100%;">
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Repositories</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: left;">
+                    <create params="{ onUpdate: load }"></create>
+                </td>
+            </tr>
+        </tbody>
+        <tbody data-bind="foreach: list">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric" data-bind="text: $data"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
