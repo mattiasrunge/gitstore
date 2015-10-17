@@ -15,7 +15,7 @@
     "bluebird": "^2.10.1",
     "child-process-promise": "^1.1.0",
     "fs-promise": "^0.3.1",
-    "mfw": "^0.0.4",
+    "mfw": "^0.0.6",
     "moment": "^2.10.6"
   }
 }
