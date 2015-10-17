@@ -3,7 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="javascript:void(0)" style="font-weight: bold; font-size: 50px;">
+                    <a class="navbar-brand" href="#" style="padding-top: 10px;">
+                        <img src="img/gitstore64.png" style="height: 40px;">
+                    </a>
+                    <a class="navbar-brand" href="#" style="font-weight: bold; font-size: 50px;">
                         GitStore
                     </a>
                 </div>
@@ -18,7 +21,12 @@
 
     <div class="container">
         <div class="row">
-            <list></list>
+            <div data-bind="if: !name()">
+                <list></list>
+            </div>
+            <div data-bind="if: name">
+                <view params="{ name: name }"></view>
+            </div>
         </div>
     </div>
 </div>

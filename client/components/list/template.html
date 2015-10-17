@@ -1,21 +1,45 @@
 <div>
-    <create params="{ onUpdate: load }"></create>
+    <breadcrumb params="{ crumbs: [ { name: 'Repositories', uri: { name: null } } ] }"></breadcrumb>
+    <h1>
+        Repositories
+        <create class="pull-right"></create>
+    </h1>
+
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Hash</th>
-                <th>Latest&nbsp;Author</th>
-                <th>Latest&nbsp;Date</th>
-                <th>Latest&nbsp;Subject</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Subject</th>
 <!--                 <th>URI</th> -->
             </tr>
         </thead>
         <tbody data-bind="foreach: list">
             <tr>
-                <td data-bind="text: $data.name"></td>
-                <td data-bind="text: $data.info.hash.substr(0, 6)" class="monospace"></td>
+                <td>
+                    <a href="#" data-bind="location: { name: $data.name }, text: $data.name"></a>
+                </td>
+                <td data-bind="text: $data.info.hash.substr(0, 7)" class="monospace"></td>
                 <td data-bind="text: $data.info.author" class="nowrap"></td>
                 <td data-bind="text: $data.info.date" class="nowrap"></td>
                 <td data-bind="text: $data.info.subject" class="monospace"></td>

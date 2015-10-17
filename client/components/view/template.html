@@ -1,0 +1,8 @@
+<div data-bind="if: info">
+    <breadcrumb params="{ crumbs: [ { name: 'Repositories', uri: { name: null } }, { name: info().name, uri: { name: info().name } } ] }"></breadcrumb>
+    <h1>
+        <span data-bind="text: info().name"></span>
+        <small data-bind="text: info().uri"></small>
+    </h1>
+
+</div>

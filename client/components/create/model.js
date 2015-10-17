@@ -10,7 +10,6 @@ define([
         this.submit = function() {
             $.get("create/" + this.name(), function(data) {
                 this.name("");
-                params.onUpdate();
             }.bind(this));
         }.bind(this);
     };
