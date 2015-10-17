@@ -24,7 +24,7 @@ define([
             }.bind(this));
         }.bind(this);
 
-        socket.on("update") {
+        socket.on("update", function() {
             this.load();
         }.bind(this));
 
