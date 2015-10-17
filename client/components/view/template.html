@@ -4,5 +4,7 @@
         <span data-bind="text: info().name"></span>
         <small data-bind="text: info().uri"></small>
     </h1>
-
+    <div data-bind="foreach: history">
+        <div class="monospace" style="white-space: pre;" data-bind="text: $data"></div>
+    </div>
 </div>

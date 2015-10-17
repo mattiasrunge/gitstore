@@ -9,8 +9,11 @@ define([
             return ko.unwrap(params.name);
         });
         this.info = ko.observable(false);
+        this.history = ko.observableArray();
 
         this.load = function() {
+            this.history.removeAll();
+
             if (this.name()) {
                 socket.emit("info", this.name(), function(error, info) {
                     if (error) {
@@ -19,6 +22,15 @@ define([
                     }
 
                     this.info(info);
+
+                    socket.emit("history", this.name(), function(error, history) {
+                        if (error) {
+                            console.error(error);
+                            return;
+                        }
+
+                        this.history(history);
+                    }.bind(this));
                 }.bind(this));
             } else {
                 this.info(false);
