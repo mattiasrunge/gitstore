@@ -24,6 +24,10 @@ define([
             }.bind(this));
         }.bind(this);
 
+        socket.on("update") {
+            this.load();
+        }.bind(this));
+
         this.load();
     };
 });
