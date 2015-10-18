@@ -29,6 +29,15 @@ define([
                             return;
                         }
 
+                        for (var n = 0; n < history.length; n++) {
+                            history[n] = history[n]
+                            .replace(/^(.*?:)/gm, "<strong>$1</strong>")
+                            .replace(/^(.*\|.*?)([\+]+)/gm, "$1<strong class='text[DASH]success'>$2</strong>")
+                            .replace(/^(.*\|.*?)([\-]+)/gm, "$1<strong class='text[DASH]danger'>$2</strong>")
+                            .replace(/(\[DASH\])/gm, "-")
+                            .replace(/(\n)$/g, "");
+                        }
+
                         this.history(history);
                     }.bind(this));
                 }.bind(this));
@@ -37,11 +46,20 @@ define([
             }
         }.bind(this);
 
+        this.update = function(name) {
+            if (name === this.name()) {
+                this.load();
+            }
+        }.bind(this);
+
         var s = this.name.subscribe(this.load);
+        socket.on("update", this.update);
+
         this.load();
 
         this.dispose = function() {
             s.dispose();
+            socket.off("update", this.update);
         };
     };
 });

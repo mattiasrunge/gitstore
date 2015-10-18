@@ -24,10 +24,12 @@ define([
             }.bind(this));
         }.bind(this);
 
-        socket.on("update", function() {
-            this.load();
-        }.bind(this));
+        socket.on("update", this.load);
 
         this.load();
+
+        this.dispose = function() {
+            socket.off("update", this.load);
+        };
     };
 });
