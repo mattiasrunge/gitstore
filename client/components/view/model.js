@@ -2,16 +2,34 @@
 
 define([
     "knockout",
+    "moment",
     "mfw/socket",
-    "mfw/status"
-], function(ko, socket, status) {
+    "mfw/status",
+    "mfw/location"
+], function(ko, moment, socket, status, location) {
     return function(params) {
+        this.limit = ko.observable(5);
         this.name = ko.pureComputed(function() {
-            return ko.unwrap(params.name);
+            return location.current() && location.current().name ? location.current().name : false;
+        });
+        this.page = ko.pureComputed(function() {
+            return parseInt(location.current() && location.current().page ? location.current().page : 0, 10);
         });
         this.info = ko.observable(false);
         this.history = ko.observableArray();
         this.status = status.create();
+
+        this.next = function() {
+            location.goto({ page: this.page() + 1 });
+        };
+
+        this.previous = function() {
+            if (this.page() === 1) {
+                location.goto({ page: null });
+            } else {
+                location.goto({ page: this.page() - 1 });
+            }
+        };
 
         this.load = function() {
             this.history.removeAll();
@@ -28,8 +46,14 @@ define([
 
                     this.info(info);
 
+                    var options = {
+                        name: this.name(),
+                        limit: this.limit(),
+                        page: this.page()
+                    };
+
                     this.status.loading(true);
-                    socket.emit("history", this.name(), function(error, history) {
+                    socket.emit("history", options, function(error, history) {
                         this.status.loading(false);
                         if (error) {
                             console.error(error);
@@ -55,18 +79,20 @@ define([
         }.bind(this);
 
         this.update = function(name) {
-            if (name === this.name()) {
+            if (name === this.name() && this.page() === 0) {
                 this.load();
             }
         }.bind(this);
 
-        var s = this.name.subscribe(this.load);
+        var s1 = this.name.subscribe(this.load);
+        var s2 = this.page.subscribe(this.load);
         socket.on("update", this.update);
 
         this.load();
 
         this.dispose = function() {
-            s.dispose();
+            s1.dispose();
+            s2.dispose();
             socket.off("update", this.update);
             status.destroy(this.status);
         };

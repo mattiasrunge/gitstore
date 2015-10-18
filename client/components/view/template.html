@@ -1,10 +1,29 @@
 <div data-bind="if: info">
-    <breadcrumb params="{ crumbs: [ { name: 'Repositories', uri: { name: null } }, { name: info().name, uri: { name: info().name } } ] }"></breadcrumb>
+    <breadcrumb params="{ crumbs: [ { name: 'Repositories', uri: { name: null, page: null } }, { name: info().name, uri: { name: info().name } } ] }"></breadcrumb>
     <h1>
         <span data-bind="text: info().name"></span>
-        <small data-bind="text: info().uri"></small>
+        <button class="btn btn-info btn-sm pull-right" data-bind="copyToClipboard: info().uri, attr: { title: info().uri }">
+            <i class="mdi-content-content-copy" style="vertical-align: bottom;"></i>
+            Copy URI to clipboard
+        </button>
     </h1>
+    <ul class="pager">
+        <li class="previous" data-bind="css: { disabled: page() === 0 }">
+            <a href="#" data-bind="click: previous">&larr; Newer</a>
+        </li>
+        <li class="next" data-bind="css: { disabled: history().length < limit() }">
+            <a href="#" data-bind="click: next">Older &rarr;</a>
+        </li>
+    </ul>
     <div data-bind="foreach: history">
         <div class="well monospace" style="white-space: pre;" data-bind="html: $data"></div>
     </div>
+    <ul class="pager" data-bind="visible: history().length > 0">
+        <li class="previous" data-bind="css: { disabled: page() === 0 }">
+            <a href="#" data-bind="click: previous">&larr; Newer</a>
+        </li>
+        <li class="next" data-bind="css: { disabled: history().length < limit() }">
+            <a href="#" data-bind="click: next">Older &rarr;</a>
+        </li>
+    </ul>
 </div>

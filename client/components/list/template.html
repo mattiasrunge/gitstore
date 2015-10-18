@@ -1,5 +1,5 @@
 <div>
-    <breadcrumb params="{ crumbs: [ { name: 'Repositories', uri: { name: null } } ] }"></breadcrumb>
+    <breadcrumb params="{ crumbs: [ { name: 'Repositories', uri: { name: null, page: null } } ] }"></breadcrumb>
     <h1>
         Repositories
         <create class="pull-right"></create>
@@ -37,7 +37,7 @@
         <tbody data-bind="foreach: list">
             <tr>
                 <td>
-                    <a href="#" data-bind="location: { name: $data.name }, text: $data.name"></a>
+                    <a href="#" data-bind="location: { name: $data.name, page: null }, text: $data.name"></a>
                 </td>
                 <td data-bind="text: $data.info.hash.substr(0, 7)" class="monospace"></td>
                 <td data-bind="text: $data.info.author" class="nowrap"></td>
