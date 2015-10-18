@@ -2,30 +2,38 @@
 
 define([
     "knockout",
-    "mfw/socket"
-], function(ko, socket, location) {
+    "mfw/socket",
+    "mfw/status"
+], function(ko, socket, status) {
     return function(params) {
         this.name = ko.pureComputed(function() {
             return ko.unwrap(params.name);
         });
         this.info = ko.observable(false);
         this.history = ko.observableArray();
+        this.status = status.create();
 
         this.load = function() {
             this.history.removeAll();
 
             if (this.name()) {
+                this.status.loading(true);
                 socket.emit("info", this.name(), function(error, info) {
+                    this.status.loading(false);
                     if (error) {
                         console.error(error);
+                        this.status.error(error);
                         return;
                     }
 
                     this.info(info);
 
+                    this.status.loading(true);
                     socket.emit("history", this.name(), function(error, history) {
+                        this.status.loading(false);
                         if (error) {
                             console.error(error);
+                            this.status.error(error);
                             return;
                         }
 
@@ -60,6 +68,7 @@ define([
         this.dispose = function() {
             s.dispose();
             socket.off("update", this.update);
+            status.destroy(this.status);
         };
     };
 });

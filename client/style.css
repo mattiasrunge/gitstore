@@ -6,3 +6,7 @@
 .nowrap {
     white-space: nowrap;
 }
+
+body {
+    overflow-y: scroll;
+}

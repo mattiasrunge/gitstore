@@ -2,7 +2,7 @@
 
 define([
     "knockout",
-    "lib/location"
+    "mfw/location"
 ], function(ko, location) {
     return function() {
         this.name = ko.pureComputed(function() {
