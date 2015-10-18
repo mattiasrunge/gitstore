@@ -35,12 +35,11 @@ define([
             this.history.removeAll();
 
             if (this.name()) {
-                this.status.loading(true);
+                this.status(true);
                 socket.emit("info", this.name(), function(error, info) {
-                    this.status.loading(false);
+                    this.status(false);
                     if (error) {
-                        console.error(error);
-                        this.status.error(error);
+                        status.printError(error);
                         return;
                     }
 
@@ -52,12 +51,11 @@ define([
                         page: this.page()
                     };
 
-                    this.status.loading(true);
+                    this.status(true);
                     socket.emit("history", options, function(error, history) {
-                        this.status.loading(false);
+                        this.status(false);
                         if (error) {
-                            console.error(error);
-                            this.status.error(error);
+                            status.printError(error);
                             return;
                         }
 

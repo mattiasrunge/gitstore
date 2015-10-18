@@ -15,19 +15,19 @@ define([
                 return false;
             }
 
-            this.status.error(false);
-            this.status.loading(true);
+            this.status(true);
 
             $.get("create/" + this.name())
             .done(function(data) {
                 this.name("");
                 $("#createModal").modal("hide");
+                status.printSuccess("Created new repository named " + this.name());
             }.bind(this))
             .fail(function(req, error, text) {
-                this.status.error("Failed to create repository, error: " + text);
+                status.printError("Failed to create repository named " + this.name() + ", error: " + text);
             }.bind(this))
             .always(function() {
-                this.status.loading(false);
+                this.status(false);
             }.bind(this));
         }.bind(this);
 

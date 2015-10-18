@@ -10,13 +10,12 @@ define([
         this.status = status.create();
 
         this.load = function() {
-            this.status.loading(true);
+            this.status(true);
             socket.emit("list", {}, function(error, list) {
-                this.status.loading(false);
+                this.status(false);
 
                 if (error) {
-                    console.error(error);
-                    this.status.error(error);
+                    status.printError(error);
                     return;
                 }
 
