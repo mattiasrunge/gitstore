@@ -1,5 +1,23 @@
 {
   "name": "client",
   "version": "0.0.0",
-  "dependencies": {}
+  "description": "",
+  "main": "mfw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AUTHOR",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "animate.css": "^3.4.0",
+    "bootstrap": "^3.3.5",
+    "bootstrap-material-design": "^0.3.0",
+    "snackbarjs": "https://github.com/FezVrasta/snackbarjs",
+    "jquery": "^2.1.4",
+    "knockout": "^3.3.0",
+    "moment": "^2.10.6",
+    "mprogress": "^0.1.1",
+    "requirejs": "^2.1.20",
+    "requirejs-text": "^2.0.12"
+  }
 }

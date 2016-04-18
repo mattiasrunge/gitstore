@@ -1,12 +1,12 @@
 "use strict";
 
-const mfw = require("mfw");
+const server = require("./lib/http-server");
 const git = require("./lib/git");
 const config = require("/etc/gitstore.json");
 
 git.init(config.hostname, config.repoDir)
 .then(function() {
-    mfw({
+    server({
         name: "GitStore",
         port: config.port,
         bindTo: config.bindTo,
@@ -15,5 +15,5 @@ git.init(config.hostname, config.repoDir)
         client: __dirname + "/client"
     }).start();
 
-    console.log("GitStore listening at " + config.hostname + ":" + config.port);
+    console.log("GitStore listening at " + config.bindTo + ":" + config.port);
 });
