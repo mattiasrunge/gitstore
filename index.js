@@ -9,10 +9,11 @@ git.init(config.hostname, config.repoDir)
     mfw({
         name: "GitStore",
         port: config.port,
+        bindTo: config.bindTo,
         api: require("./lib/http-api"),
         routes: require("./lib/http-routes"),
         client: __dirname + "/client"
     }).start();
 
-    console.log("GitStore listening at http://" + config.hostname + ":" + config.port);
+    console.log("GitStore listening at " + config.hostname + ":" + config.port);
 });
