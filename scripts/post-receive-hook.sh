@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 
 wget --spider "url/update/name"

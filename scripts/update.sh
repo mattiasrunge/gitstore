@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 REPOURL=$1
 REMOTEURL=$2

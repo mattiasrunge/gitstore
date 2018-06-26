@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 APPDIR=$1
 REPODIR=$2
