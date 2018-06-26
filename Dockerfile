@@ -2,7 +2,7 @@ FROM node:10-alpine
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache --virtual=build-dependencies git ssh
+RUN apk add --no-cache --virtual=build-dependencies git openssh-client
 
 COPY . .
 
